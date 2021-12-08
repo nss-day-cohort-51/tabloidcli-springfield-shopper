@@ -49,7 +49,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     throw new NotImplementedException();
 
                 case "5":
-                    throw new NotImplementedException();
+                    Remove();
+                    return this;
 
                 case "0":
                     return _parentUI;
@@ -88,5 +89,47 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine("-------------");
             }
         }
+
+        private Journal Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose an Entry:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Journal> journals = _journalRepository.GetAll();
+
+            for (int i = 0; i < journals.Count; i++)
+            {
+                Journal journal = journals[i];
+                Console.WriteLine($" {i + 1}) {journal.Title}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return journals[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
+
+        private void Remove()
+        {
+            Journal entryToDelete = Choose("Which entry would you like to remove?");
+            if (entryToDelete != null)
+            {
+                _journalRepository.Delete(entryToDelete.Id);
+            }
+        }
+
+
     }
 }
