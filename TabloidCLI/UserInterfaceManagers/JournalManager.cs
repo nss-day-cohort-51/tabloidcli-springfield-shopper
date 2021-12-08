@@ -46,7 +46,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
 
                 case "4":
-                    throw new NotImplementedException();
+                    Edit();
+                    return this;
 
                 case "5":
                     Remove();
@@ -128,6 +129,34 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 _journalRepository.Delete(entryToDelete.Id);
             }
+        }
+
+        private void Edit()
+        {
+            Journal newJournal = Choose("Please choose a journal entry to edit: ");
+            if(newJournal == null)
+            {
+                return;
+            }
+
+            Console.Write("Enter new title: ");
+            string newTitle = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newTitle))
+            {
+                newJournal.Title = newTitle;
+            }
+
+            Console.Write("Enter new content: ");
+            string newContent = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newContent))
+            {
+                newJournal.Content = newContent;
+            }
+
+            newJournal.CreateDateTime = DateTime.Now;
+
+            _journalRepository.Update(newJournal);
+
         }
 
 
