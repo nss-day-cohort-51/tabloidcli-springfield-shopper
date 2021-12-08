@@ -35,7 +35,8 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    throw new NotImplementedException();
+                    List();
+                    return this;
 
                 case "2":
                     throw new NotImplementedException();
@@ -74,5 +75,18 @@ namespace TabloidCLI.UserInterfaceManagers
             _journalRepository.Insert(journal);
         }
 
+        private void List()
+        {
+            List<Journal> journals = _journalRepository.GetAll();
+
+            foreach(Journal j in journals)
+            {
+                Console.WriteLine("-------------");
+                Console.WriteLine($"Title: {j.Title}");
+                Console.WriteLine($"Entry Content: {j.Content}");
+                Console.WriteLine($"{j.CreateDateTime}");
+                Console.WriteLine("-------------");
+            }
+        }
     }
 }
