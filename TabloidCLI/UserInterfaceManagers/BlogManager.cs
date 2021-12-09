@@ -35,7 +35,8 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    throw new NotImplementedException();
+                    List();
+                    return this;
 
                 case "2":
                     Add();
@@ -72,6 +73,18 @@ namespace TabloidCLI.UserInterfaceManagers
             blog.Url = Console.ReadLine();
 
             _blogRepository.Insert(blog);
+        }
+
+        private void List()
+        {
+            List<Blog> blogs = _blogRepository.GetAll();
+
+            foreach(Blog b in blogs)
+            {
+                Console.WriteLine("-----------");
+                Console.WriteLine(b);
+
+            }
         }
     }
 }
