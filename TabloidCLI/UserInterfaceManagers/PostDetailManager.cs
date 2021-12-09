@@ -31,7 +31,6 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Remove Tag");
-            Console.WriteLine(" 4) Note Management");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -46,9 +45,6 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "3":
                     RemoveTag();
-                    return this;
-                case "4":
-                    NoteManagement();
                     return this;
                 case "0":
                     return _parentUI;
