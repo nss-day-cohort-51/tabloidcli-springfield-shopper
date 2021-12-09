@@ -14,6 +14,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private PostRepository _postRepository;
         private AuthorRepository _authorRepository;
         private BlogRepository _blogRepository;
+        
         private AuthorManager _authorManager;
         private BlogManager _blogManager;
         private string _connectionString;
@@ -26,6 +27,7 @@ namespace TabloidCLI.UserInterfaceManagers
             _blogRepository = new BlogRepository(connectionString);
             _authorManager = new AuthorManager(this,connectionString);
             _blogManager = new BlogManager(this, connectionString);
+            
             _connectionString = connectionString;
         }
         public IUserInterfaceManager Execute()
@@ -59,8 +61,16 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                     
                 case "5":
-                    throw new NotImplementedException();
-                    
+                    Post post = Choose();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailManager(this, _connectionString, post.Id);
+                    }
+
                 case "0":
                     return _parentUI;
                 default:
@@ -251,6 +261,7 @@ namespace TabloidCLI.UserInterfaceManagers
             postEdit.Blog = ChooseBlog();
 
             _postRepository.Update(postEdit);
-        } 
+        }
+         
     }
 }
