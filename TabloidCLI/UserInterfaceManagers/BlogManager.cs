@@ -46,7 +46,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     throw new NotImplementedException();
 
                 case "4":
-                    throw new NotImplementedException();
+                    Remove();
+                    return this;
 
                 case "5":
                     throw new NotImplementedException();
@@ -85,6 +86,51 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine(b);
 
             }
+        }
+
+        private Blog Choose(string prompt = null)
+        {
+            if(prompt == null)
+            {
+                prompt = "Please choose a Blog";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Blog> blogs = _blogRepository.GetAll();
+
+            for(int i = 0; i < blogs.Count; i++)
+            {
+                Console.WriteLine($" {i + 1}) {blogs[i].Title}");
+            }
+
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+
+            try
+            {
+                int choice = int.Parse(input);
+                return blogs[choice - 1];
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+
+        }
+
+        private void Remove()
+        {
+            Blog selectedBlog = Choose();
+
+            if(selectedBlog != null)
+            {
+                _blogRepository.Delete(selectedBlog.Id);
+            }
+
+
         }
     }
 }
