@@ -38,7 +38,7 @@ namespace TabloidCLI.Repositories
                         journals.Add(journal);
                     }
 
-                    reader.Close();
+                    reader.Close(); 
 
                     return journals;
                 }
