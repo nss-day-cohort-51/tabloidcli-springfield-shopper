@@ -4,6 +4,7 @@ using System.Text;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
 using Microsoft.Data.SqlClient;
+using System.Linq;
 
 namespace TabloidCLI.Repositories
 {
@@ -63,9 +64,23 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
-        public void Update(Blog entry)
+        public void Update(Blog blog)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Blog SET Title = @title, Url = @url WHERE id = @id";
+
+                    cmd.Parameters.AddWithValue("@Title", blog.Title);
+                    cmd.Parameters.AddWithValue("@Url", blog.Url);
+                    cmd.Parameters.AddWithValue("@id", blog.Id);
+
+
+                    cmd.ExecuteNonQuery();
+                }                             
+            }
         }
 
         public void Delete(int id)

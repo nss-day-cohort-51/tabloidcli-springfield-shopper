@@ -43,7 +43,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
 
                 case "3":
-                    throw new NotImplementedException();
+                    Edit();
+                    return this;
 
                 case "4":
                     Remove();
@@ -75,6 +76,36 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _blogRepository.Insert(blog);
         }
+
+        private void Edit()
+        {
+
+            Blog blogToEdit = Choose("Which blog would you like to edit?");
+            if (blogToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New Title (blank to leave unchanged: ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                blogToEdit.Title = title;
+            }
+
+            Console.WriteLine();
+            Console.Write("New Url (blank to leave unchanged: ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                blogToEdit.Url = url;
+            }
+           
+            _blogRepository.Update(blogToEdit);
+        }
+
+
 
         private void List()
         {
