@@ -4,6 +4,7 @@ using System.Text;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
 using TabloidCLI.UserInterfaceManagers;
+using Microsoft.Data.SqlClient;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -13,15 +14,20 @@ namespace TabloidCLI.UserInterfaceManagers
         private AuthorRepository _authorRepository;
         private PostRepository _postRepository;
         private TagRepository _tagRepository;
+        private NoteManager _noteManager;
+        private string _connectionString;
         private int _postId;
 
         public PostDetailManager(IUserInterfaceManager parentUI, string connectionString, int postId)
         {
             _parentUI = parentUI;
+            _connectionString = connectionString;
             _authorRepository = new AuthorRepository(connectionString);
             _postRepository = new PostRepository(connectionString);
             _tagRepository = new TagRepository(connectionString);
+            _noteManager = new NoteManager( parentUI, connectionString);
             _postId = postId;
+            
         }
 
         public IUserInterfaceManager Execute()
@@ -31,6 +37,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Remove Tag");
+            Console.WriteLine(" 4) Note Management");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -46,6 +53,8 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "3":
                     RemoveTag();
                     return this;
+                case "4": return new NoteManager(this, _connectionString);
+
                 case "0":
                     return _parentUI;
                 default:

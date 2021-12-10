@@ -37,7 +37,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) Add Post");
             Console.WriteLine(" 3) Edit Post");
             Console.WriteLine(" 4) Remove Post");
-            Console.WriteLine(" 5) Note Management");
+            Console.WriteLine(" 5) Post Detail Management");
             Console.WriteLine(" 0) Return to Main Menu");
 
             Console.Write("> ");
